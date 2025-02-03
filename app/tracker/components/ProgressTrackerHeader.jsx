@@ -2,25 +2,25 @@ import React from "react";
 import { Calendar } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/utils/supabase/server";
+import WavingHand from "@/components/ui/waving_hand";
 
 const ProgressTrackerHeader = async ({ children }) => {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
   return (
-    <div className="flex justify-between items-center gap-5">
-      <h1 className="text-2xl font-bold mr-auto">
-        {data.user.email || "Dev Ascend"}
-      </h1>
-      <div className="flex items-center space-x-4">
-        <Calendar className="h-5 w-5" />
-        <Input
-          type="date"
-          // value={selectedDate}
-          // onChange={(e) => setSelectedDate(e.target.value)}
-          className="w-auto"
-        />
+    <div className="flex justify-start items-center gap-5">
+      <div className="flex items-center justify-start mr-auto">
+        <h1 className="text-2xl font-bold mr-auto">
+          {(user?.user_metadata?.display_name || user?.email) && "Hello, "}{" "}
+          {user?.user_metadata?.display_name || user?.email || "Dev Ascend"}
+        </h1>
+        <WavingHand />
       </div>
+
       {children}
     </div>
   );

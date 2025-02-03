@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Mail, Lock, Loader2 } from "lucide-react";
+import { Mail, Lock, Loader2, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { login, signup } from "../actions";
@@ -12,6 +12,7 @@ import { login, signup } from "../actions";
 export default function AuthForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [activeTab, setActiveTab] = useState("signin");
@@ -23,8 +24,9 @@ export default function AuthForm() {
       setMessage("");
 
       const response = await (type === "signin" ? login : signup)({
+        username,
         password,
-        email
+        email,
       });
 
       if (response.error) {
@@ -79,6 +81,21 @@ export default function AuthForm() {
         }}
         className="space-y-6"
       >
+        {activeTab === "signup" && (
+          <div className="space-y-4">
+            <div className="relative">
+              <User className="absolute left-4 top-4 h-5 w-5 text-gray-400" />
+              <Input
+                type="text"
+                placeholder="Enter your username"
+                className="pl-12 py-6 text-base"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required={activeTab === "signup"}
+              />
+            </div>
+          </div>
+        )}
         <div className="space-y-4">
           <div className="relative">
             <Mail className="absolute left-4 top-4 h-5 w-5 text-gray-400" />

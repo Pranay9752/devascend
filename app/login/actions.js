@@ -7,7 +7,6 @@ import { createClient } from '@/utils/supabase/server'
 
 export async function login(formData) {
   const supabase = await createClient()
-  console.log('formData: ', formData);
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
@@ -17,6 +16,7 @@ export async function login(formData) {
   }
 
   const { error } = await supabase.auth.signInWithPassword(data)
+  console.log('error: ', error);
 
   if (error) {
     redirect('/error')
@@ -32,8 +32,13 @@ export async function signup(formData) {
   // type-casting here for convenience
   // in practice, you should validate your inputs
   const data = {
-    email: formData.get('email'),
-    password: formData.get('password'),
+    email: formData['email'],
+    password: formData['password'],
+    options: {
+      data: {
+        display_name: formData['username']  // Store username in user metadata
+      }
+    }
   }
 
   const { error } = await supabase.auth.signUp(data)
@@ -42,6 +47,6 @@ export async function signup(formData) {
     redirect('/error')
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+  revalidatePath('/tracker', 'layout')
+  redirect('/tracker')
 }
