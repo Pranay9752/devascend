@@ -38,9 +38,10 @@ export const CategoryCard = ({ category }) => {
               Daily Target: {category.min_target} hours
             </p>
           </div>
-          <button className="bg-blue-50 text-blue-600 hover:bg-blue-100 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+          <AddEntry categoryId={category.id} />
+          {/* <button className="bg-blue-50 text-blue-600 hover:bg-blue-100 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
             Add Entry
-          </button>
+          </button> */}
         </div>
         <div className="mt-4">
           <Progress value={targetProgress} className="h-2" />

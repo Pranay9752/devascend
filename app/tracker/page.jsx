@@ -10,21 +10,21 @@ import { CategoryCard } from "./components/CategoryCard";
 import { addEntry } from "./actions/addEntry";
 
 export default async function Tracker({ searchParams }) {
-  console.log('searchParams: ', searchParams);
+  console.log("searchParams: ", searchParams);
   const { start_date = "2025-02-01", end_date = "2025-02-05" } = searchParams;
-
+  console.log("start_date: ", start_date);
+  console.log("end_date: ", end_date);
   const { data } = await getCategoryData({ start_date, end_date });
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <ProgressTrackerHeader>
         <div className="flex items-center space-x-4">
-          <Calendar className="h-5 w-5" />
           <form method="GET" action="/tracker">
             <Input
               type="date"
               name="start_date"
-              defaultValue={start_date}
+              defaultValue={new Date(start_date)}
               className="w-auto"
             />
             <button type="submit" className="hidden">
@@ -37,10 +37,7 @@ export default async function Tracker({ searchParams }) {
       <div className="grid gap-6">
         {data ? (
           data?.map((category) => (
-            <CategoryCard
-              key={category.id}
-              category={category}
-            />
+            <CategoryCard key={category.id} category={category} />
           ))
         ) : (
           <></>
