@@ -16,19 +16,18 @@ export const getCategoryData = async ({ start_date, end_date }) => {
       .from("categories")
       .select("*")
       .eq("user_id", user_id);
-    console.log("categories: ", categories);
 
     if (catError) {
       return { error: "No category availabe!", data: [] };
     }
 
     const { data: entries, error: entError } = await supabase
-      .from("entries")
-      .select("*")
-      .eq("user_id", user_id)
-      .gte("created_at", start_date)
-      .lte("created_at", end_date);
-
+    .from("entries")
+    .select("*")
+    .eq("user_id", user_id)
+    .gte("created_at", start_date)
+    .lte("created_at", end_date);
+    
     if (entError) {
       return { error: "Server Error!", data: [] };
     }

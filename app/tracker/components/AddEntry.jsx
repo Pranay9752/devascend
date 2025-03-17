@@ -31,7 +31,6 @@ export const AddEntry = ({ categoryId }) => {
 
       if (response.ok) {
         // Handle success (e.g., show success message, reset form)
-        console.log("Entry added successfully:", result.data);
         setNewEntry(BASE_ENTRY);
         setOpen(false);
       } else {

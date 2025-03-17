@@ -82,7 +82,6 @@ export async function POST(req) {
       .insert([{ user_id: user.user.id, name, icon, min_target: minTarget }])
       .single();
 
-    console.log("error: ", error);
     if (error) {
       return new Response(JSON.stringify({ error: error.message }), {
         status: 500,

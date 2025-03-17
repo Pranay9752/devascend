@@ -1,7 +1,6 @@
 export const addCategory = async (categoryData) => {
   try {
-    // const { data: {user} } = await supabase.auth.getUser()
-    // console.log('user: ', user);
+
     const response = await fetch("/api/categories", {
       method: "POST",
       headers: {
